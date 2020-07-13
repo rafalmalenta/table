@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useEffect } from 'react';
 import {fetchCompanies} from "../redux/CompaniesActions";
+import {sortCompanies} from "../redux/CompaniesActions";
 import Table from '../components/Table';
 import { connect } from 'react-redux';
 
@@ -16,11 +17,16 @@ function Layout(props){
     useEffect(() => {
         props.dispatch(fetchCompanies());       
     },[]);
+    function test(){
+        //console.log("dispacz", props.companies)
+        props.dispatch(sortCompanies(companies.companies,"ASC","id"))
+    }
     let component = <div>WHOOPS! something went wrong</div>   
-    //console.log(companies)
+
     return(
-        <div>   
-            {!companies ? (component):(< Table  companiesData={companies}/>)}
+        <div>
+            <div>Tutaj pojawi się opis </div>
+            {!companies ? (component):(< Table disp={test} companiesData={companies}/>)}
         </div>
     )
 }

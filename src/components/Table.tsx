@@ -1,14 +1,18 @@
 import React from 'react';
 import Company from "../models/Company";
+import {quickSort} from "../Service/quickSort";
 
 export default function Table(props){
     let details = props.companiesData.companies;
-    //console.log("s",details);
-    //setTimeout(()=>console.log(details),4000)
+
     let row;
+    console.log(props)
+    function dispacz(){
+        props.disp()
+    }
+
     if(details){
         let array = Object.values(details);//castuje objekt na tablice
-        //console.log(array)
         row = array.map((company:Company)=>{
             return <tr key ={company.id}>
                 <td>{company.id}</td>
@@ -18,13 +22,24 @@ export default function Table(props){
                 <td>{company.avgIncome}</td>
                 <td>{company.lastMonthIncome}</td>
                 </tr>;
-               
         })
-        //console.log(row)
     }
 
+    // else {
+    //     return <tr >
+    //         <td></td>
+    //         <td></td>
+    //         <td></td>
+    //         <td></td>
+    //         <td></td>
+    //         <td></td>
+    //     </tr>;
+    // }
+    console.log("det",details)
+    //console.log("row",row)
+
     return(
-        <table>
+        <table onClick={dispacz}>
             <thead>
                 <tr>
                     <th>id</th>

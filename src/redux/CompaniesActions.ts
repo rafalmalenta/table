@@ -1,7 +1,8 @@
 import axios, {AxiosResponse} from "axios";
 import Company from "../models/Company";
-import fetchIncome from "../Service/fetchIncome";
-import promiseLoop from "../Service/promiseLoop";
+import fetchLoop from "../Service/fetchLoop";
+import {quickSort} from "../Service/quickSort";
+
 export function fetchCompanies() {
     return function (dispatch) {
         dispatch({type: "FETCH_DETAILS_STARTED",})
@@ -12,14 +13,21 @@ export function fetchCompanies() {
                 companiesArray = response.data.map((company)=>
                      new Company(company.name,company.id, company.city)
                 )
-                promiseLoop(companiesArray).then(()=>{
+                fetchLoop(companiesArray).then(()=>{
                     dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: {...companiesArray }});
                 })
+                    .catch(error => dispatch({type: "FETCH_COMPANIES_FAILED"}))
 
             })
             .catch(error => {
                 dispatch({type: "FETCH_COMPANIES_FAILED"})
             })
     }
-}   
+}
+export function sortCompanies(array,order,parameter) {
+    return function (dispatch) {
+        let arrayka = quickSort(array,order,parameter);
+        dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: {...arrayka }})
+    }
+}
 
