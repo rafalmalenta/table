@@ -1,9 +1,9 @@
-
+import axios from 'axios';
 export default class Company{
     name: string;
     id: number;
     city: string;
-    income: number;
+    totalIncome: number;
     avgIncome: number;
     lastMonthIncome: number;
     constructor (name, id, city){
@@ -11,7 +11,10 @@ export default class Company{
         this.name = name;
         this.city = city;
     }
-    setDetails(name,id,city):void{
-
+    setIncome(totalIncome,avgIncome,lastMonthIncome){
+        this.totalIncome=totalIncome;
+        this.avgIncome= avgIncome;
+        this.lastMonthIncome = lastMonthIncome;
     }
+
 }

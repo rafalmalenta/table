@@ -5,7 +5,7 @@ const defaul={
 }
 export default function CompaniesReducer(state = {...defaul, fetched: false,fetching: false},action) {
     switch (action.type) {
-        case "FETCH_COMPANIES_SUCCEED":{           
+        case "FETCH_COMPANIES_SUCCEED":{
             return { ...state,
                 fetching: false,
                 fetched: true,
