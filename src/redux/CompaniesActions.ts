@@ -26,8 +26,10 @@ export function fetchCompanies() {
 }
 export function sortCompanies(array,order,parameter) {
     return function (dispatch) {
-        let arrayka = quickSort(array,order,parameter);
-        dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: {...arrayka }})
+       quickSort(array,order,parameter).then(res=>{
+           dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: {...res }})
+       });
+
     }
 }
 
