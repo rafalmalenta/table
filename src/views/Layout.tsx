@@ -29,7 +29,6 @@ function Layout(props){
         <div>
             <div>Tutaj pojawi się opis </div>
             {!companies ? (component):(< Table paginator={paginator} disp={changeSorting} companiesData={companies}/>)}
-            <Paginator paginator={paginator} />
         </div>
     )
 }

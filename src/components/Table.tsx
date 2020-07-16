@@ -2,6 +2,7 @@ import React from 'react';
 import Company from "../models/Company";
 import { useState } from 'react';
 import {sortCompanies} from "../redux/CompaniesActions";
+import Paginator from "./Paginator";
 
 export default function Table(props){
     let details = {...props.companiesData.companies};
@@ -37,21 +38,24 @@ export default function Table(props){
         })
     }
     return(
-        <table >
-            <thead>
-                <tr>
-                    <th onClick={()=>dispacz(array,"id")}>id</th>
-                    <th onClick={()=>dispacz(array,"name")}>company name</th>
-                    <th onClick={()=>dispacz(array,"city")}>city</th>
-                    <th onClick={()=>dispacz(array,"totalIncome")}>total income</th>
-                    <th onClick={()=>dispacz(array,"avgIncome")}>average income</th>
-                    <th onClick={()=>dispacz(array,"lastMonthIncome")}>last month income</th>
-                </tr>       
-            </thead>
-            <tbody>                
-               {row}
-            </tbody>
-          
-        </table>
+        <div>
+            <table >
+                <thead>
+                    <tr>
+                        <th onClick={()=>dispacz(array,"id")}>id</th>
+                        <th onClick={()=>dispacz(array,"name")}>company name</th>
+                        <th onClick={()=>dispacz(array,"city")}>city</th>
+                        <th onClick={()=>dispacz(array,"totalIncome")}>total income</th>
+                        <th onClick={()=>dispacz(array,"avgIncome")}>average income</th>
+                        <th onClick={()=>dispacz(array,"lastMonthIncome")}>last month income</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   {row}
+                </tbody>
+
+            </table>
+            <Paginator lastPage={Math.ceil(array.length/perPage)} paginator={props.paginator} />
+        </div>
     )
 }
