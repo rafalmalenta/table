@@ -1,21 +1,33 @@
 import React from 'react';
 import Company from "../models/Company";
-import {quickSort} from "../Service/quickSort";
+import { useState } from 'react';
+import {sortCompanies} from "../redux/CompaniesActions";
 
 export default function Table(props){
-    let details = props.companiesData.companies;
-
+    let details = {...props.companiesData.companies};
+    let perPage =props.paginator.recordsPerPage;
+    let page = props.paginator.page;
     let row;
-    console.log(props)
-    function dispacz(){
-        props.disp()
-    }
+    const [parameterSorting,setParameter] = useState("")
+    let array = Object.values({...details});//castuje objekt na tablice
+    let filtered = array;
 
-    if(details){
-        let array = Object.values(details);//castuje objekt na tablice
-        row = array.map((company:Company)=>{
+    let filteredAndPaginated = filtered.slice(((page-1)*perPage),page*perPage);
+    console.log(filteredAndPaginated)
+    function dispacz(array,parameter){
+        if(parameter == parameterSorting){
+            props.disp(array,"DESC",parameter);
+            setParameter("");
+        }
+        else {
+            props.disp(array, "ASC", parameter);
+            setParameter(parameter);
+        }
+    }
+    if(filteredAndPaginated){
+        row = filteredAndPaginated.map((company:Company)=>{
             return <tr key ={company.id}>
-                <td>{company.id}</td>
+                <td >{company.id}</td>
                 <td>{company.name}</td>
                 <td>{company.city}</td>
                 <td>{company.totalIncome}</td>
@@ -24,30 +36,16 @@ export default function Table(props){
                 </tr>;
         })
     }
-
-    // else {
-    //     return <tr >
-    //         <td></td>
-    //         <td></td>
-    //         <td></td>
-    //         <td></td>
-    //         <td></td>
-    //         <td></td>
-    //     </tr>;
-    // }
-    console.log("det",details)
-    //console.log("row",row)
-
     return(
-        <table onClick={dispacz}>
+        <table >
             <thead>
                 <tr>
-                    <th>id</th>
-                    <th>company name</th>
-                    <th>city</th>
-                    <th>total income</th>
-                    <th>average income</th>
-                    <th>last month income</th>
+                    <th onClick={()=>dispacz(array,"id")}>id</th>
+                    <th onClick={()=>dispacz(array,"name")}>company name</th>
+                    <th onClick={()=>dispacz(array,"city")}>city</th>
+                    <th onClick={()=>dispacz(array,"totalIncome")}>total income</th>
+                    <th onClick={()=>dispacz(array,"avgIncome")}>average income</th>
+                    <th onClick={()=>dispacz(array,"lastMonthIncome")}>last month income</th>
                 </tr>       
             </thead>
             <tbody>                

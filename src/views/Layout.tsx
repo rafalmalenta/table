@@ -4,29 +4,32 @@ import {fetchCompanies} from "../redux/CompaniesActions";
 import {sortCompanies} from "../redux/CompaniesActions";
 import Table from '../components/Table';
 import { connect } from 'react-redux';
+import Paginator from "../components/Paginator";
 
 export default connect(
     (store)=>{
         return {
-            companies: store,
+            companies: store.CompaniesReducer,
+            paginator: store.PaginatorReducer,
         }
     },
 )(
 function Layout(props){
     let companies = props.companies;
+    let paginator = props.paginator;
     useEffect(() => {
         props.dispatch(fetchCompanies());       
     },[]);
-    function test(){
-        //console.log("dispacz", props.companies)
-        props.dispatch(sortCompanies(companies.companies,"ASC","id"))
+    function changeSorting(array,order,parameter){
+        props.dispatch(sortCompanies(array,order,parameter));
     }
     let component = <div>WHOOPS! something went wrong</div>   
 
     return(
         <div>
             <div>Tutaj pojawi się opis </div>
-            {!companies ? (component):(< Table disp={test} companiesData={companies}/>)}
+            {!companies ? (component):(< Table paginator={paginator} disp={changeSorting} companiesData={companies}/>)}
+            <Paginator paginator={paginator} />
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import Company from "../models/Company";
 import fetchLoop from "../Service/fetchLoop";
-import {quickSort} from "../Service/quickSort";
+import {bubbleSort} from "../Service/bubbleSort";
 
 export function fetchCompanies() {
     return function (dispatch) {
@@ -13,8 +13,9 @@ export function fetchCompanies() {
                 companiesArray = response.data.map((company)=>
                      new Company(company.name,company.id, company.city)
                 )
-                fetchLoop(companiesArray).then(()=>{
-                    dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: {...companiesArray }});
+                fetchLoop(companiesArray)
+                    .then(()=>{
+                        dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: {...companiesArray }});
                 })
                     .catch(error => dispatch({type: "FETCH_COMPANIES_FAILED"}))
 
@@ -26,10 +27,10 @@ export function fetchCompanies() {
 }
 export function sortCompanies(array,order,parameter) {
     return function (dispatch) {
-       quickSort(array,order,parameter).then(res=>{
-           dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: {...res }})
+       dispatch({type: "FETCH_DETAILS_STARTED",})
+       bubbleSort(array,order,parameter).then(response=>{
+           dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: response })
        });
-
     }
 }
 

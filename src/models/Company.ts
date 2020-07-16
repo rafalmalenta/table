@@ -11,7 +11,7 @@ export default class Company{
         this.name = name;
         this.city = city;
     }
-    setIncome(totalIncome,avgIncome,lastMonthIncome){
+    setIncome?(totalIncome,avgIncome,lastMonthIncome){
         this.totalIncome=totalIncome;
         this.avgIncome= avgIncome;
         this.lastMonthIncome = lastMonthIncome;
