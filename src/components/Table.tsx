@@ -1,6 +1,7 @@
 import React from 'react';
 import Company from "../models/Company";
 import { useState } from 'react';
+import ViewSetter from './ViewSetter'
 import {sortCompanies} from "../redux/CompaniesActions";
 import Paginator from "./Paginator";
 
@@ -39,6 +40,7 @@ export default function Table(props){
     }
     return(
         <div>
+            <ViewSetter />
             <table >
                 <thead>
                     <tr>
