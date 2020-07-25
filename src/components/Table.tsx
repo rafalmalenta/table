@@ -15,7 +15,7 @@ export default function Table(props){
     let filtered = array;
 
     let filteredAndPaginated = filtered.slice(((page-1)*perPage),page*perPage);
-    console.log(filteredAndPaginated)
+
     function dispacz(array,parameter){
         if(parameter == parameterSorting){
             props.disp(array,"DESC",parameter);

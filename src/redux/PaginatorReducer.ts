@@ -1,7 +1,7 @@
 
 const defaul={
-    recordsPerPage:31 as number,
-    page:6 as number,
+    recordsPerPage:10 as number,
+    page:1 as number,
 }
 export default function PaginatorReducer(state = {...defaul },action) {
     switch (action.type) {
