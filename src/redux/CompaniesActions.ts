@@ -25,12 +25,4 @@ export function fetchCompanies() {
             })
     }
 }
-export function sortCompanies(array,order,parameter) {
-    return function (dispatch) {
-       dispatch({type: "FETCH_DETAILS_STARTED",})
-       bubbleSort(array,order,parameter).then(response=>{
-           dispatch({type: "FETCH_COMPANIES_SUCCEED", payload: response })
-       });
-    }
-}
 

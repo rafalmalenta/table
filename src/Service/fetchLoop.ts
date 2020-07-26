@@ -6,7 +6,8 @@ export default function fetchLoop(companies:Array<Company>){
     return new Promise((resolve,reject)=>{
         let counter=0;
         companies.forEach((company:Company)=>{
-            fetchIncome(company.id).then(res=>{
+            fetchIncome(company.id).then((res:Company)=>{
+                console.log(res)
                 company.setIncome(res.total,res.avg,res.lastMonth);
                 counter++;
                 if (counter == companies.length)
