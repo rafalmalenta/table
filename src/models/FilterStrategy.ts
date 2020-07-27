@@ -20,8 +20,7 @@ export class stringFilter implements FilterStrategy{
 export class rangeFilter implements FilterStrategy{
     public filter(array,parameter,range) {
         let filtered = array.filter((company)=>{
-            console.log(company,parameter,range.min)
-            if(company[parameter] >= range.max && company[parameter] <= range.max){
+            if(company[parameter] >= range.min && company[parameter] <= range.max){
                 return company;
             }
         })

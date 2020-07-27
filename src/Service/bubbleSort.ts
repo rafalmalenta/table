@@ -16,8 +16,6 @@ export function bubbleSort(objectsArray, order, parameter) {
                 }
             }
         }
-        console.log(companyArray)
         resolve(companyArray);
-
     })
 }
