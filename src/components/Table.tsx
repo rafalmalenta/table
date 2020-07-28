@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { bubbleSort } from '../Service/bubbleSort'
 import {fetchCompanies } from "../redux/CompaniesActions";
 import TableRow from "./TableRow";
+import DualRangeInput from "./DualRangeInput";
 
 export default connect(
     (store)=>{
@@ -27,7 +28,7 @@ function Table(props){
     const [filters,setFilters] = useState([]);
     const [idValue,setIdValue] = useState([1,300]);
     const [incomeValue,setIncomeValue] = useState([215000,320000]);
-    const [incomeAvgValue,setAvgIncomeValue] = useState([4000,9000]);
+    const [avgIncomeValue,setAvgIncomeValue] = useState([4000,9000]);
     let companiesArray:Array<any> = Object.values({...details});//castuje objekt na tablice
     useEffect(() => {
         props.dispatch(fetchCompanies());
@@ -59,12 +60,6 @@ function Table(props){
         filterAll(companiesArray)
     },[filters]);
 
-    const klik = () => {
-        let currentFilters = filters;
-        currentFilters.push({type:"string",parameter:"name",string:"Howel"})
-        setFilters([...currentFilters]);
-    }
-    //console.log(filters);
 
     let filteredAndPaginated = companiesData.slice(((page-1)*perPage),page*perPage);
 
@@ -109,37 +104,18 @@ function Table(props){
                     <tr>
                         <th >
                             <span>id <span onClick={()=>sort(companiesData,"id")}>sort</span></span>
-                            <form name="filterID" onSubmit={(e)=>setFilterRange(e,"id",{min:idValue[0],max:idValue[1]})}>
-                                <input value={idValue[0]} min="1" max="300" onChange={(e)=>setIdValue([e.target.value,idValue[1]])} type="range" name="idmin" placeholder="filter"/>
-                                <label for="idmin" >min value {idValue[0]} </label>
-                                <input value={idValue[1]} min="1" max="300" onChange={(e)=>setIdValue([idValue[0],e.target.value])} type="range" name="idmax" placeholder="filter"/>
-                                <label for="idmax" >max value {idValue[1]}</label>
-                                <input type="submit" value="filter id" />
-                            </form >
-
+                            <DualRangeInput min={1} max={300}setFilterRange={setFilterRange} parameter="id" value={idValue} setValue={setIdValue}/>
                         </th>
                         <th onClick={()=>sort(companiesData,"city")}>city</th>
                         <th onClick={()=>sort(companiesData,"name")}>company name</th>
                         <th >
-                            <span onClick={()=>sort(companiesData,"totalIncome")}>total income <span onClick={()=>sort(companiesData,"id")}>sort</span></span>
-                            <form name="filterIncome" onSubmit={(e)=>setFilterRange(e,"totalIncome",{min:incomeValue[0],max:incomeValue[1]})}>
-                                <input value={incomeValue[0]} min="215000" max="320000" onChange={(e)=>setIncomeValue([e.target.value,incomeValue[1]])} type="range" name="idmin" placeholder="filter"/>
-                                <label for="incomedmin" >min value {incomeValue[0]} </label>
-                                <input value={incomeValue[1]} min="215000" max="320000" onChange={(e)=>setIncomeValue([incomeValue[0],e.target.value])} type="range" name="idmax" placeholder="filter"/>
-                                <label for="incomemax" >max value {incomeValue[1]}</label>
-                                <input type="submit" value="filter income" />
-                            </form >
+                            <span>total income <span onClick={()=>sort(companiesData,"totalIncome")}>sort</span></span>
+                            <DualRangeInput min={215000} max={320000} setFilterRange={setFilterRange} parameter="totalIncome" value={incomeValue} setValue={setIncomeValue}/>
                         </th>
                         <th >
                             <span >Average income <span onClick={()=>sort(companiesData,"avgIncome")}>sort</span></span>
-                            <form name="filterAvgIncome" onSubmit={(e)=>setFilterRange(e,"avgIncome",{min:incomeAvgValue[0],max:incomeAvgValue[1]})}>
-                                <input value={incomeAvgValue[0]} min="4000" max="9000" onChange={(e)=>setAvgIncomeValue([e.target.value,incomeAvgValue[1]])} type="range" name="idmin" placeholder="filter"/>
-                                <label for="incomedmin" >min value {incomeAvgValue[0]} </label>
-                                <input value={incomeAvgValue[1]} min="4000" max="9000" onChange={(e)=>setAvgIncomeValue([incomeAvgValue[0],e.target.value])} type="range" name="idmax" placeholder="filter"/>
-                                <label for="incomemax" >max value {incomeAvgValue[1]}</label>
-                                <input type="submit" value="filter income" />
-                            </form >
-                        </th>
+                            <DualRangeInput min={4000} max={9000} setFilterRange={setFilterRange} parameter="avgIncome" value={avgIncomeValue} setValue={setAvgIncomeValue}/>
+                            </th>
                         <th onClick={()=>sort(companiesData,"lastMonthIncome")}>last month income</th>
                     </tr>
                 </thead>
