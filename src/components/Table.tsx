@@ -9,6 +9,7 @@ import { bubbleSort } from '../Service/bubbleSort'
 import {fetchCompanies } from "../redux/CompaniesActions";
 import TableRow from "./TableRow";
 import DualRangeInput from "./DualRangeInput";
+import {changePage} from "../redux/PaginatorActions";
 
 export default connect(
     (store)=>{
@@ -53,13 +54,13 @@ function Table(props){
                 filteredValue = cFil.doFilter(filteredValue,filter.parameter, filter.range);
             }
         });
+        props.dispatch(changePage(1))
         setCompaniesData(filteredValue);
     }
     useEffect(() =>{
         if(companiesArray)
         filterAll(companiesArray)
     },[filters]);
-
 
     let filteredAndPaginated = companiesData.slice(((page-1)*perPage),page*perPage);
 
@@ -89,11 +90,28 @@ function Table(props){
             }
         })
         if(filterWithGivenParameterIndex < 0)
-            currentFilters.push({type:"range",parameter,range: range});
+            currentFilters.push({type:"range",parameter,string: event.target.value});
         else {
-           currentFilters[filterWithGivenParameterIndex].range =  range
+           currentFilters[filterWithGivenParameterIndex].string =  event.target.value;
         }
         setFilters([...currentFilters]);
+    }
+    function setFilterText(event,parameter) {
+        event.preventDefault();
+        let currentFilters = filters;
+        let filterWithGivenParameterIndex = 0;
+        filterWithGivenParameterIndex = currentFilters.findIndex((filter)=>{
+            if (filter.parameter == parameter) {
+                return filter
+            }
+        })
+        if(filterWithGivenParameterIndex < 0)
+            currentFilters.push({type:"string",parameter,string: event.target.value});
+        else {
+            currentFilters[filterWithGivenParameterIndex].string =  event.target.value;
+        }
+        setFilters([...currentFilters]);
+
     }
     //console.log(Math.ceil(companiesData.length/perPage))
     return(
@@ -103,19 +121,22 @@ function Table(props){
                 <thead>
                     <tr>
                         <th >
-                            <span>id <span onClick={()=>sort(companiesData,"id")}>sort</span></span>
+                            <span>id <span onClick={()=>sort(companiesData,"id")}>sort {(parameterSorting=="id")?"descending":"ascending"}</span></span>
                             <DualRangeInput min={1} max={300}setFilterRange={setFilterRange} parameter="id" value={idValue} setValue={setIdValue}/>
                         </th>
-                        <th onClick={()=>sort(companiesData,"city")}>city</th>
+                        <th >
+                            <span>city <span onClick={()=>sort(companiesData,"city")}>sort {(parameterSorting=="id")?"descending":"ascending"}</span></span>
+                            <input type="text" onInput={(e)=>setFilterText(e, "city")} />
+                        </th>
                         <th onClick={()=>sort(companiesData,"name")}>company name</th>
                         <th >
-                            <span>total income <span onClick={()=>sort(companiesData,"totalIncome")}>sort</span></span>
+                            <span>total income <span onClick={()=>sort(companiesData,"totalIncome")}>sort {(parameterSorting=="totalIncome")?"descending":"ascending"}</span></span>
                             <DualRangeInput min={215000} max={320000} setFilterRange={setFilterRange} parameter="totalIncome" value={incomeValue} setValue={setIncomeValue}/>
                         </th>
                         <th >
-                            <span >Average income <span onClick={()=>sort(companiesData,"avgIncome")}>sort</span></span>
+                            <span >Average income <span onClick={()=>sort(companiesData,"avgIncome")}>sort {(parameterSorting=="avgIncome")?"descending":"ascending"}</span></span>
                             <DualRangeInput min={4000} max={9000} setFilterRange={setFilterRange} parameter="avgIncome" value={avgIncomeValue} setValue={setAvgIncomeValue}/>
-                            </th>
+                        </th>
                         <th onClick={()=>sort(companiesData,"lastMonthIncome")}>last month income</th>
                     </tr>
                 </thead>

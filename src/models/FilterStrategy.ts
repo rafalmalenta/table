@@ -10,7 +10,8 @@ export class stringFilter implements FilterStrategy{
         }
         else {
             filtered = array.filter((company: {}) => {
-                if (company[parameter].includes(value))
+                    let nameUpperCase = company[parameter].toUpperCase();
+                if (nameUpperCase.includes(value.toUpperCase()))
                     return company;
             })
         }
