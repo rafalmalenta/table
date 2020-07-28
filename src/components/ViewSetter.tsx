@@ -11,19 +11,24 @@ export default connect(
 )(
 
   function(props){
-    //console.log(props);
+
       let e:Event;
     function setView(e) {
         props.dispatch(changeWiev(e.target.value))
 
     }
     return(
-        <select defaultValue={10} onChange={(ev)=>setView(ev)}>
-            <option value="5">5</option>
-            <option value="10" >10</option>
-            <option value="15">15</option>
-            <option value="25">25</option>
-        </select>
+        <div class="header">
+            <span>Pick amount of recors per page</span>
+            <select defaultValue={10} onChange={(ev)=>setView(ev)}>
+                <option value="5">5</option>
+                <option value="10" >10</option>
+                <option value="15">15</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+        </div>
+
     )
 }
 )

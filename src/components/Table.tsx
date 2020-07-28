@@ -43,7 +43,6 @@ function Table(props){
 
     function filterAll(array){
         let filteredValue = array;
-        console.log("all data",filteredValue)
         filters.forEach((filter)=>{
             if(filter.type == "string") {
                 let cFil = new Filterer(new stringFilter());
@@ -90,9 +89,9 @@ function Table(props){
             }
         })
         if(filterWithGivenParameterIndex < 0)
-            currentFilters.push({type:"range",parameter,string: event.target.value});
+            currentFilters.push({type:"range",parameter,range: range});
         else {
-           currentFilters[filterWithGivenParameterIndex].string =  event.target.value;
+           currentFilters[filterWithGivenParameterIndex].range =  range;
         }
         setFilters([...currentFilters]);
     }
@@ -111,9 +110,8 @@ function Table(props){
             currentFilters[filterWithGivenParameterIndex].string =  event.target.value;
         }
         setFilters([...currentFilters]);
-
     }
-    //console.log(Math.ceil(companiesData.length/perPage))
+
     return(
         <div>
             <ViewSetter />
@@ -126,9 +124,12 @@ function Table(props){
                         </th>
                         <th >
                             <span>city <span onClick={()=>sort(companiesData,"city")}>sort {(parameterSorting=="id")?"descending":"ascending"}</span></span>
-                            <input type="text" onInput={(e)=>setFilterText(e, "city")} />
+                            <input type="text" placeholder="type fraze" onInput={(e)=>setFilterText(e, "city")} />
                         </th>
-                        <th onClick={()=>sort(companiesData,"name")}>company name</th>
+                        <th >
+                            <span>company name <span onClick={()=>sort(companiesData,"name")}>sort {(parameterSorting=="id")?"descending":"ascending"}</span></span>company name
+                            <input type="text" placeholder="type fraze" onInput={(e)=>setFilterText(e, "name")} />
+                        </th>
                         <th >
                             <span>total income <span onClick={()=>sort(companiesData,"totalIncome")}>sort {(parameterSorting=="totalIncome")?"descending":"ascending"}</span></span>
                             <DualRangeInput min={215000} max={320000} setFilterRange={setFilterRange} parameter="totalIncome" value={incomeValue} setValue={setIncomeValue}/>
