@@ -5,7 +5,7 @@ export default function fetchIncome(id){
         axios.get(`https://recruitment.hal.skygate.io/incomes/${id}`)
             .then((response)=>{
                 let currentMonth = new Date().getMonth()+1;
-                let currentYear = new Date().getFullYear();
+                let currentYear = new Date().getFullYear() - 1;// decreased year by 1 to fetch some values
                 let acumulated = response.data.incomes.reduce((acumulator, currentValue, index)=>{
                     acumulator.total = (parseFloat(acumulator.total) + parseFloat(currentValue.value)).toFixed(2);
                     if(currentValue.date.split("-")[1] == currentMonth&& currentValue.date.split("-")[0]== currentYear){
