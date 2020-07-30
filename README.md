@@ -7,3 +7,4 @@ and filter by all filds.
     * copy or download
     * run npm install
     * run npm run dev
+    * or simply visit [my website](http://table.rafalmalenta.usermd.net)

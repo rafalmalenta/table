@@ -31,9 +31,9 @@ function Table(props){
     const [incomeValue,setIncomeValue] = useState([215000,320000]);
     const [avgIncomeValue,setAvgIncomeValue] = useState([4000,9000]);
     let companiesArray:Array<any> = Object.values({...details});//castuje objekt na tablice
-    useEffect(() => {
-        props.dispatch(fetchCompanies());
-    },[]);
+    // useEffect(() => {
+    //     props.dispatch(fetchCompanies());
+    // },[]);
     useEffect(() => {
         if(companiesArray.length>=0)
             filterAll(companiesArray);
@@ -118,7 +118,7 @@ function Table(props){
             <table >
                 <thead>
                     <tr>
-                        <th >
+                        <th class="dual-range" >
                             <span>id <span onClick={()=>sort(companiesData,"id")}>sort {(parameterSorting=="id")?"descending":"ascending"}</span></span>
                             <DualRangeInput min={1} max={300}setFilterRange={setFilterRange} parameter="id" value={idValue} setValue={setIdValue}/>
                         </th>
@@ -126,7 +126,7 @@ function Table(props){
                             <span>city <span onClick={()=>sort(companiesData,"city")}>sort {(parameterSorting=="id")?"descending":"ascending"}</span></span>
                             <input type="text" placeholder="type fraze" onInput={(e)=>setFilterText(e, "city")} />
                         </th>
-                        <th >
+                        <th class="dual-range">
                             <span>company name <span onClick={()=>sort(companiesData,"name")}>sort {(parameterSorting=="id")?"descending":"ascending"}</span></span>company name
                             <input type="text" placeholder="type fraze" onInput={(e)=>setFilterText(e, "name")} />
                         </th>
@@ -134,7 +134,7 @@ function Table(props){
                             <span>total income <span onClick={()=>sort(companiesData,"totalIncome")}>sort {(parameterSorting=="totalIncome")?"descending":"ascending"}</span></span>
                             <DualRangeInput min={215000} max={320000} setFilterRange={setFilterRange} parameter="totalIncome" value={incomeValue} setValue={setIncomeValue}/>
                         </th>
-                        <th >
+                        <th class="dual-range">
                             <span >Average income <span onClick={()=>sort(companiesData,"avgIncome")}>sort {(parameterSorting=="avgIncome")?"descending":"ascending"}</span></span>
                             <DualRangeInput min={4000} max={9000} setFilterRange={setFilterRange} parameter="avgIncome" value={avgIncomeValue} setValue={setAvgIncomeValue}/>
                         </th>

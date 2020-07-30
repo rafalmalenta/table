@@ -1,11 +1,14 @@
 table, .row
-    max-width: 1000px
-    margin: 0 auto
-    width: 100%
+  margin: 0 auto
+  width: 100%
+  min-width: 400px
+
 th,td 
   border: 1px solid black
-  width: 100px
-  overflow: hidden
+  width: 15%
+
+tr:nth-child(2n)
+  background-color: aliceblue
 input
   display: block
   margin: 0 auto
@@ -13,3 +16,41 @@ input
   min-width: 300px
   width: 30%
   margin: 0 auto
+@media only screen and (max-width: 888px)
+  table
+    overflow: hidden
+  thead
+    width: 40%
+    min-width: 220px
+  thead,tbody
+    display: inline-block
+  tbody
+    width: 60%
+    scrollbar-width: none
+    -ms-overflow-style: none
+    overflow: scroll
+    white-space: nowrap
+    max-width: 400px
+  thead th
+    border-right: 0px
+    width: 100%
+    display: block
+  tbody, tr
+    display: inline-block
+  tbody tr
+    width: 100%
+  tbody tr td
+    //padding-top: 5%
+    text-align: center
+    vertical-align: center
+    width: 100%
+    display: block
+    float: none
+  tr
+    display: inline-block
+  td, th
+    height: 9em
+
+
+
+
